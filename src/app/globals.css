@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #f4f1e9;
+  --paper-bright: #fbfaf6;
+  --ink: #181915;
+  --ink-soft: #68695f;
+  --line: #d8d5cb;
+  --grocery: #53b175;
+  --grocery-deep: #005840;
+  --fifi-night: #06182e;
+  --fifi-ink: #0b2545;
+  --fifi-sky: #6bb3ff;
+  --fifi-sun: #ffee98;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* { box-sizing: border-box; }
+html { background: var(--paper); scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255,255,255,.9), transparent 35rem),
+    var(--paper);
+  font-family: var(--font-sans), sans-serif;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; text-decoration: none; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; }
+::selection { background: var(--fifi-sun); color: var(--ink); }
+* { scrollbar-width: thin; scrollbar-color: rgba(24, 25, 21, .28) transparent; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(24, 25, 21, .28); border: 3px solid var(--paper); border-radius: 999px; }
+
+.serif { font-family: var(--font-serif), serif; font-style: italic; }
+.page-shell { width: min(calc(100% - 48px), 1160px); margin-inline: auto; }
+.hairline { border-color: color-mix(in srgb, var(--ink) 16%, transparent); }
+.pressable { transition: transform 160ms var(--ease-out), background-color 160ms ease, color 160ms ease; }
+.pressable:active { transform: scale(.97); }
+.media-zoom { transition: transform 260ms var(--ease-out); }
+
+@keyframes reel {
+  to { transform: translateX(calc(-50% - .5rem)); }
+}
+.product-reel { animation: reel 36s linear infinite; }
+
+@media (max-width: 640px) {
+  .page-shell { width: min(calc(100% - 24px), 1160px); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pressable:hover { transform: scale(1.025); }
+  .media-zoom:hover,
+  .group:hover .media-zoom { transform: scale(1.025); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .product-reel { animation: none; }
+}
