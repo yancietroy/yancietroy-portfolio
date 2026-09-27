@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { PortfolioProject } from "@/content/projects";
+import { assetPath } from "@/lib/assetPath";
 
 const details = {
   grocerybudget: {
@@ -40,7 +41,7 @@ export function CaseStudy({ project }: { project: PortfolioProject }) {
           <div className="relative min-h-[430px] md:col-span-7 md:min-h-full">
             <Image src={project.cover} alt={dark ? "Fifi's room at sunrise" : `${project.name} product presentation`} fill priority sizes="(max-width: 768px) 100vw, 58vw" className={dark ? "object-cover md:rounded-[24px]" : "object-contain"}/>
             {dark && <div className="absolute bottom-10 left-1/2 z-10 h-[330px] w-[250px] -translate-x-1/2 md:bottom-14 md:h-[410px] md:w-[310px]">
-              <Image src="/work/fifi/assistant-character.svg" alt="Fifi, the cat mascot, holding a telephone" fill priority sizes="(max-width: 768px) 55vw, 28vw" className="object-contain object-bottom drop-shadow-[0_22px_30px_rgba(0,0,0,.32)]" />
+              <Image src={assetPath("/work/fifi/assistant-character.svg")} alt="Fifi, the cat mascot, holding a telephone" fill priority sizes="(max-width: 768px) 55vw, 28vw" className="object-contain object-bottom drop-shadow-[0_22px_30px_rgba(0,0,0,.32)]" />
             </div>}
           </div>
         </div>
@@ -51,7 +52,7 @@ export function CaseStudy({ project }: { project: PortfolioProject }) {
         <section className="page-shell border-t hairline py-20 md:py-24">
           <div className="grid gap-14 md:grid-cols-[.7fr_1.3fr]"><h2 className="text-sm font-semibold uppercase tracking-[.16em] text-black/45">Decisions that shaped it</h2><div>{content.decisions.map(([title, copy], index) => <article key={title} className="grid gap-4 border-b hairline py-8 first:pt-0 md:grid-cols-[70px_1fr]"><span className="text-sm text-black/35">0{index + 1}</span><div><h3 className="text-3xl font-semibold tracking-[-.04em]">{title}</h3><p className="mt-3 max-w-[58ch] text-lg leading-relaxed text-black/58">{copy}</p></div></article>)}</div></div>
         </section>
-        {project.assets.length > 0 && <section className="page-shell grid gap-4 pb-20 md:grid-cols-2 md:pb-28">{project.assets.map((asset, index) => <div key={asset} className={`relative min-h-[520px] overflow-hidden rounded-[24px] ${dark ? "bg-[#0b2545]" : "bg-[#e4efe7]"}`}><Image src={asset} alt={`${project.name} supporting product view ${index + 1}`} fill sizes="(max-width: 768px) 100vw, 50vw" className={dark ? "object-cover" : "object-contain p-8"}/>{dark && <div className="absolute bottom-8 left-1/2 z-10 h-[350px] w-[270px] -translate-x-1/2 md:h-[390px] md:w-[300px]"><Image src={index === 0 ? "/work/fifi/detective-character.svg" : "/work/fifi/fae-character.svg"} alt={index === 0 ? "Fifi dressed as a noir detective" : "Fifi dressed as a forest fae"} fill sizes="300px" className="object-contain object-bottom drop-shadow-[0_18px_26px_rgba(0,0,0,.3)]" /></div>}</div>)}</section>}
+        {project.assets.length > 0 && <section className="page-shell grid gap-4 pb-20 md:grid-cols-2 md:pb-28">{project.assets.map((asset, index) => <div key={asset} className={`relative min-h-[520px] overflow-hidden rounded-[24px] ${dark ? "bg-[#0b2545]" : "bg-[#e4efe7]"}`}><Image src={asset} alt={`${project.name} supporting product view ${index + 1}`} fill sizes="(max-width: 768px) 100vw, 50vw" className={dark ? "object-cover" : "object-contain p-8"}/>{dark && <div className="absolute bottom-8 left-1/2 z-10 h-[350px] w-[270px] -translate-x-1/2 md:h-[390px] md:w-[300px]"><Image src={assetPath(index === 0 ? "/work/fifi/detective-character.svg" : "/work/fifi/fae-character.svg")} alt={index === 0 ? "Fifi dressed as a noir detective" : "Fifi dressed as a forest fae"} fill sizes="300px" className="object-contain object-bottom drop-shadow-[0_18px_26px_rgba(0,0,0,.3)]" /></div>}</div>)}</section>}
       </> : <section className="page-shell py-20 md:py-28"><p className="text-xs font-semibold uppercase tracking-[.16em] text-black/45">Placeholder case study</p><h2 className="mt-5 max-w-[900px] text-[clamp(2.8rem,5vw,5.5rem)] leading-[1] tracking-[-.04em]">The structure is ready. Final visuals and process material will be migrated from the Framer portfolio.</h2></section>}
 
       <section className="bg-[#181915] px-6 py-20 text-white md:py-24"><div className="mx-auto max-w-[1160px]"><Link href="/#work" className="text-[clamp(3rem,6vw,6rem)] leading-none tracking-[-.04em]">Back to selected work <span className="text-[#ffee98]">↗</span></Link></div></section>

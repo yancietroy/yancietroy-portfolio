@@ -11,6 +11,6 @@ test("portfolio contains four unique project slugs", () => {
 });
 
 test("flagship products use local cover assets", () => {
-  assert.match(source, /slug: "grocerybudget"[\s\S]*cover: "\/work\/grocerybudget\//);
-  assert.match(source, /slug: "fifi"[\s\S]*cover: "\/work\/fifi\//);
+  assert.match(source, /slug: "grocerybudget"[\s\S]*cover: assetPath\("\/work\/grocerybudget\//);
+  assert.match(source, /slug: "fifi"[\s\S]*cover: assetPath\("\/work\/fifi\//);
 });

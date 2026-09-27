@@ -1,3 +1,5 @@
+import { assetPath } from "@/lib/assetPath";
+
 export type ProjectTone = "grocery" | "fifi" | "neutral";
 
 export interface PortfolioProject {
@@ -24,8 +26,8 @@ export const projects: readonly PortfolioProject[] = [
     summary: "An offline-first grocery budgeting app that turns a shopping list into a live picture of what you are spending.",
     proof: "Shipped on iOS and Android · 293 paying subscribers · $436 MRR",
     tone: "grocery",
-    cover: "/work/grocerybudget/hero-v2.png",
-    assets: ["/work/grocerybudget/inside-cart.png", "/work/grocerybudget/insights.png"],
+    cover: assetPath("/work/grocerybudget/hero-v2.png"),
+    assets: [assetPath("/work/grocerybudget/inside-cart.png"), assetPath("/work/grocerybudget/insights.png")],
     featured: true,
   },
   {
@@ -37,8 +39,8 @@ export const projects: readonly PortfolioProject[] = [
     summary: "An iPhone alarm that calls with the morning a user chose—personal notes, local weather, and headlines, delivered in character.",
     proof: "Expo + Swift · AlarmKit · Live Activities · Ten-character voice system",
     tone: "fifi",
-    cover: "/work/fifi/assistant.webp",
-    assets: ["/work/fifi/detective.webp", "/work/fifi/fae.webp"],
+    cover: assetPath("/work/fifi/assistant.webp"),
+    assets: [assetPath("/work/fifi/detective.webp"), assetPath("/work/fifi/fae.webp")],
     featured: true,
   },
   {
@@ -50,7 +52,7 @@ export const projects: readonly PortfolioProject[] = [
     summary: "Core workflows, builders, and a design system for an enterprise customer-engagement platform.",
     proof: "Case study material coming from the existing portfolio.",
     tone: "neutral",
-    cover: "/work/placeholders/velaro.svg",
+    cover: assetPath("/work/placeholders/velaro.svg"),
     assets: [],
     featured: false,
   },
@@ -63,7 +65,7 @@ export const projects: readonly PortfolioProject[] = [
     summary: "Analytics and operational workflows that helped clinic managers understand business and practitioner performance.",
     proof: "Case study material coming from the existing portfolio.",
     tone: "neutral",
-    cover: "/work/placeholders/growthbox.svg",
+    cover: assetPath("/work/placeholders/growthbox.svg"),
     assets: [],
     featured: false,
   },
