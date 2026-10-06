@@ -21,7 +21,7 @@ The production build is a static export in `out/`, suitable for Cloudflare Pages
 
 ## Content still needed
 
-- Replace Velaro and GrowthBox placeholder artwork with exports from the existing Framer portfolio.
-- Keep metrics durable (cumulative totals, fixed past windows); see `resume/README.md`.
-- Link the résumé PDFs in `public/resume/` from the résumé page.
+- Replace the Velaro and GrowthBox placeholder artwork with new visuals (not from the Framer site).
+- Keep metrics durable (cumulative totals, fixed past windows); only use metrics approved in `troy-job-search/profile.md`.
+- Link the résumé PDFs in `public/resume/` from the résumé page. They're generated in the private `troy-job-search` repo (`node resume/build.mjs --publish`), not edited here.
 - Confirm the production domain and update `src/app/sitemap.ts` and `public/robots.txt` if it is not `yancietroy.com`.
