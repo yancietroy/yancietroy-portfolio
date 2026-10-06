@@ -1,22 +1,27 @@
+import { Capabilities } from "@/components/Capabilities";
 import { ContactBand } from "@/components/ContactBand";
-import { ExperienceArchive } from "@/components/ExperienceArchive";
 import { Hero } from "@/components/Hero";
-import { MotionProvider } from "@/components/MotionProvider";
-import { SelectedWork } from "@/components/SelectedWork";
+import { ProductBand } from "@/components/ProductBand";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { WorkSection } from "@/components/WorkSection";
+import { projectsIn } from "@/content/projects";
 
 export default function HomePage() {
   return (
-    <MotionProvider>
-      <main className="w-full max-w-full overflow-x-hidden">
-        <SiteHeader />
+    <>
+      <SiteHeader />
+      <main className="overflow-x-clip">
         <Hero />
-        <SelectedWork />
-        <ExperienceArchive />
+        <h2 id="work" className="sr-only">Apps I designed and built</h2>
+        {projectsIn("product").map((project, index) => (
+          <ProductBand key={project.slug} project={project} flip={index % 2 === 1} />
+        ))}
+        <WorkSection />
+        <Capabilities />
         <ContactBand />
-        <SiteFooter />
       </main>
-    </MotionProvider>
+      <SiteFooter />
+    </>
   );
 }

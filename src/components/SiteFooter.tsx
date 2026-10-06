@@ -1,12 +1,11 @@
+import { site } from "@/content/site";
+
 export function SiteFooter() {
   return (
-    <footer className="bg-[#181915] px-5 py-10 text-white">
-      <div className="mx-auto flex max-w-[1160px] flex-col gap-6 border-t border-white/15 pt-7 text-sm text-white/55 md:flex-row md:items-center md:justify-between">
-        <p>Yancie Troy Saludo · Rizal, Philippines</p>
-        <div className="flex gap-6">
-          <a className="transition-colors duration-150 hover:text-white" href="https://linkedin.com/in/troy-saludo/">LinkedIn</a>
-          <a className="transition-colors duration-150 hover:text-white" href="mailto:yanciesaludo14@gmail.com">Email</a>
-        </div>
+    <footer className="bg-[var(--ink)] text-white/60">
+      <div className="shell flex flex-col gap-2 border-t border-white/15 py-8 text-[0.9rem] md:flex-row md:justify-between">
+        <p>{site.name}, {site.location}</p>
+        <p>Designed and built by me, with Next.js.</p>
       </div>
     </footer>
   );

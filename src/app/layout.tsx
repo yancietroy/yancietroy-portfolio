@@ -1,23 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Instrument_Serif } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
-const instrument = Instrument_Serif({
-  subsets: ["latin"],
-  variable: "--font-serif",
-  weight: "400",
-});
+const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", weight: ["500", "600", "700", "800"] });
+const body = Instrument_Sans({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
-  title: "Yancie Troy Saludo — Product Designer & Product Builder",
+  title: "Yancie Troy Saludo, product designer",
   description:
-    "Product designer and builder behind GroceryBudget and Fifi, with experience shipping consumer mobile products and B2B SaaS.",
+    "Product designer with 3+ years in B2B SaaS who also designs and builds his own apps: GroceryBudget (30,000+ users) and Fifi, both live in the App Store.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable} ${instrument.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body>{children}</body>
     </html>
   );

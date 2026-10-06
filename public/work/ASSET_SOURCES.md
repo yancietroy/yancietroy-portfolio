@@ -1,8 +1,7 @@
-# Asset Sources
+# Asset sources
 
-- `grocerybudget/*` copied from `~/Downloads/grocerybudget-marketing/public/mockups/`.
-- `fifi/*.webp` copied from `~/Downloads/ringrise-marketing/public/scenes/`.
-- `fifi/icon.png` copied from `~/Downloads/ringrise-marketing/src/app/icon.png`.
-- `placeholders/*` created specifically for the portfolio and intended to be replaced with Troy's Framer case-study exports.
+- `grocerybudget/hero-v2|inside-cart|insights.webp`: converted from `grocerybudget-marketing/public/mockups/`.
+- `fifi/*`: copied from `ringrise-marketing` (scenes, character art, icon).
+- Everything else (`velaro/`, `allie/`, `marketing-sites/`, `earlier-work/`, and the other `grocerybudget/` images): Troy's own case-study images, backed up from his old Framer site to `../framer-backup/` and converted with `node scripts/import-assets.mjs` (WebP, max 2000px wide).
 
-The source projects remain unchanged. These copies allow the portfolio to deploy independently.
+The EmergencyCare concept from the backup is deliberately excluded: its screens show phone numbers.

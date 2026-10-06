@@ -2,18 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Shell: cool, quiet slate on near-white so each product's own colors carry the page.
+  Boldness lives in the product bands; everything else stays disciplined.
+*/
 :root {
-  --paper: #f4f1e9;
-  --paper-bright: #fbfaf6;
-  --ink: #181915;
-  --ink-soft: #68695f;
-  --line: #d8d5cb;
-  --grocery: #53b175;
-  --grocery-deep: #005840;
-  --fifi-night: #06182e;
-  --fifi-ink: #0b2545;
-  --fifi-sky: #6bb3ff;
-  --fifi-sun: #ffee98;
+  --paper: #f4f5f7;
+  --surface: #ffffff;
+  --ink: #1a1d23;
+  --ink-2: #4a505b;
+  --ink-3: #6b717d;
+  --line: #dde0e5;
+  --focus: #1366e8;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -22,49 +22,64 @@ html { background: var(--paper); scroll-behavior: smooth; }
 body {
   margin: 0;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 10% 0%, rgba(255,255,255,.9), transparent 35rem),
-    var(--paper);
-  font-family: var(--font-sans), sans-serif;
+  background: var(--paper);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; text-decoration: none; }
-button, a { -webkit-tap-highlight-color: transparent; }
-:focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; }
-::selection { background: var(--fifi-sun); color: var(--ink); }
-* { scrollbar-width: thin; scrollbar-color: rgba(24, 25, 21, .28) transparent; }
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(24, 25, 21, .28); border: 3px solid var(--paper); border-radius: 999px; }
+img { max-width: 100%; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 4px; }
+::selection { background: #1a1d23; color: #fff; }
 
-.serif { font-family: var(--font-serif), serif; font-style: italic; }
-.page-shell { width: min(calc(100% - 48px), 1160px); margin-inline: auto; }
-.hairline { border-color: color-mix(in srgb, var(--ink) 16%, transparent); }
-.pressable { transition: transform 160ms var(--ease-out), background-color 160ms ease, color 160ms ease; }
-.pressable:active { transform: scale(.97); }
-.media-zoom { transition: transform 260ms var(--ease-out); }
+.display { font-family: var(--font-display), system-ui, sans-serif; font-optical-sizing: auto; }
+.shell { width: min(calc(100% - 32px), 1240px); margin-inline: auto; }
+.measure { max-width: 62ch; }
+.rule { border-color: var(--line); }
 
-@keyframes reel {
-  to { transform: translateX(calc(-50% - .5rem)); }
+/* Links that read as links: underline that tightens on hover */
+.link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  transition: text-decoration-color 160ms ease;
 }
-.product-reel { animation: reel 36s linear infinite; }
+.link:hover { text-decoration-color: currentColor; }
 
-@media (max-width: 640px) {
-  .page-shell { width: min(calc(100% - 24px), 1160px); }
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.65rem 1.1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 160ms var(--ease-out), background-color 160ms ease, border-color 160ms ease;
 }
+.button:active { transform: scale(0.97); }
+.button-solid { background: var(--ink); color: #fff; }
+.button-solid:hover { background: #2c313a; }
+.button-line { border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); }
+.button-line:hover { border-color: var(--ink); }
 
-@media (hover: hover) and (pointer: fine) {
-  .pressable:hover { transform: scale(1.025); }
-  .media-zoom:hover,
-  .group:hover .media-zoom { transform: scale(1.025); }
+/* The single orchestrated moment: the hero headline settles in once on load. */
+@keyframes settle {
+  from { opacity: 0; transform: translateY(0.35em); }
+  to { opacity: 1; transform: none; }
 }
+.settle { animation: settle 900ms var(--ease-out) both; }
+.settle-2 { animation-delay: 90ms; }
+.settle-3 { animation-delay: 180ms; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
   }
-  .product-reel { animation: none; }
 }

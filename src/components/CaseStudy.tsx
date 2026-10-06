@@ -1,61 +1,154 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { PortfolioProject } from "@/content/projects";
+import { projects, type PortfolioProject } from "@/content/projects";
 import { assetPath } from "@/lib/assetPath";
-
-const details = {
-  grocerybudget: {
-    thesis: "A shopping list should tell you what the trip is costing before checkout—not after the money is gone.",
-    decisions: [
-      ["Design for the aisle", "The active cart makes budget, checked items, quantity, and running total readable in a one-handed shopping context."],
-      ["Offline is the default", "Local-first behavior keeps the list dependable inside stores with unreliable signal, while Firebase synchronizes when connectivity returns."],
-      ["Remember what matters", "Price memory and store comparison turn past purchases into useful guidance without asking users to maintain a second system."],
-    ],
-  },
-  fifi: {
-    thesis: "The alarm is not the product. The moment someone answers and hears a morning made for them is the product.",
-    decisions: [
-      ["Reliability over theatre", "CallKit created a more literal call screen but required a server-triggered VoIP push. AlarmKit won because an alarm must work without a network."],
-      ["Character with structure", "Ten callers share one dependable wake-up flow while voice, language, art direction, and briefing energy make each feel distinct."],
-      ["Prove the experience early", "Voice auditions and a complete sample call let users understand the unfamiliar interaction before reaching the subscription decision."],
-    ],
-  },
-} as const;
+import { ContactBand } from "./ContactBand";
+import { SiteFooter } from "./SiteFooter";
+import { SiteHeader } from "./SiteHeader";
 
 export function CaseStudy({ project }: { project: PortfolioProject }) {
-  const content = details[project.slug as keyof typeof details];
-  const dark = project.tone === "fifi";
-  const heroClass = dark ? "bg-[#06182e] text-[#fff9d9]" : project.tone === "grocery" ? "bg-[#dcefe2] text-[#063e2d]" : "bg-[#e9e5dc] text-[#181915]";
+  const { theme } = project;
+  const isFifi = project.slug === "fifi";
+  const next = projects[(projects.findIndex((p) => p.slug === project.slug) + 1) % projects.length];
+  const divider = `color-mix(in srgb, ${theme.fg} 22%, transparent)`;
+  const facts = [
+    ["Role", project.role],
+    ["When", project.period],
+    ["Platform", project.platform],
+    ["Built with", project.builtWith],
+  ].filter((fact): fact is [string, string] => Boolean(fact[1]));
 
   return (
-    <main className="overflow-x-hidden">
-      <header className="page-shell flex items-center justify-between py-6 text-sm">
-        <Link href="/">← Yancie Troy</Link><Link href="/resume">Resume</Link>
-      </header>
-      <section className={`${heroClass} mx-3 overflow-hidden rounded-[24px] md:mx-5 md:rounded-[32px]`}>
-        <div className="mx-auto grid min-h-[680px] max-w-[1240px] gap-9 px-7 py-10 md:grid-cols-12 md:px-11 md:py-12">
-          <div className="flex flex-col justify-between md:col-span-5">
-            <p className="text-xs font-semibold uppercase tracking-[.16em] opacity-55">{project.role} · {project.period}</p>
-            <div><h1 className="text-[clamp(3.4rem,5vw,5.8rem)] font-semibold leading-[.9] tracking-[-.04em]">{project.name}</h1><p className="mt-7 max-w-[44ch] text-lg leading-relaxed opacity-70">{project.summary}</p><p className="mt-7 border-t border-current/20 pt-5 text-sm font-semibold">{project.proof}</p></div>
-          </div>
-          <div className="relative min-h-[430px] md:col-span-7 md:min-h-full">
-            <Image src={project.cover} alt={dark ? "Fifi's room at sunrise" : `${project.name} product presentation`} fill priority sizes="(max-width: 768px) 100vw, 58vw" className={dark ? "object-cover md:rounded-[24px]" : "object-contain"}/>
-            {dark && <div className="absolute bottom-10 left-1/2 z-10 h-[330px] w-[250px] -translate-x-1/2 md:bottom-14 md:h-[410px] md:w-[310px]">
-              <Image src={assetPath("/work/fifi/assistant-character.svg")} alt="Fifi, the cat mascot, holding a telephone" fill priority sizes="(max-width: 768px) 55vw, 28vw" className="object-contain object-bottom drop-shadow-[0_22px_30px_rgba(0,0,0,.32)]" />
-            </div>}
-          </div>
-        </div>
-      </section>
+    <>
+      <SiteHeader />
+      <main className="overflow-x-clip">
+        <section style={{ background: theme.bg, color: theme.fg }}>
+          <div className="shell pb-12 pt-14 md:pb-16 md:pt-20">
+            <Link href="/#work" className="link text-[0.95rem]" style={{ color: theme.accent }}>
+              All work
+            </Link>
+            <h1 className="display settle mt-6 text-[clamp(2.5rem,9vw,7.5rem)] font-extrabold leading-[0.88] tracking-[-0.045em]">
+              {project.name}
+            </h1>
+            <p className="settle settle-2 mt-6 max-w-[38ch] text-[clamp(1.25rem,2.2vw,1.6rem)] leading-snug opacity-90">{project.summary}</p>
 
-      {content ? <>
-        <section className="page-shell py-20 md:py-28"><p className="max-w-[1100px] text-[clamp(2.8rem,5.5vw,6rem)] leading-[1.02] tracking-[-.04em]">{content.thesis}</p></section>
-        <section className="page-shell border-t hairline py-20 md:py-24">
-          <div className="grid gap-14 md:grid-cols-[.7fr_1.3fr]"><h2 className="text-sm font-semibold uppercase tracking-[.16em] text-black/45">Decisions that shaped it</h2><div>{content.decisions.map(([title, copy], index) => <article key={title} className="grid gap-4 border-b hairline py-8 first:pt-0 md:grid-cols-[70px_1fr]"><span className="text-sm text-black/35">0{index + 1}</span><div><h3 className="text-3xl font-semibold tracking-[-.04em]">{title}</h3><p className="mt-3 max-w-[58ch] text-lg leading-relaxed text-black/58">{copy}</p></div></article>)}</div></div>
+            <dl className="settle settle-3 mt-12 grid grid-cols-2 gap-x-6 gap-y-5 border-t pt-6 lg:grid-cols-4" style={{ borderColor: divider }}>
+              {facts.map(([label, value]) => (
+                <div key={label}>
+                  <dt className="text-[0.9rem]" style={{ color: theme.accent }}>{label}</dt>
+                  <dd className="mt-1 text-[1rem]">{value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="relative mt-12 aspect-[4/3] overflow-hidden rounded-[18px] md:aspect-[16/9]" style={{ background: isFifi ? theme.soft : `color-mix(in srgb, ${theme.fg} 8%, transparent)` }}>
+              <Image src={project.cover.src} alt={project.cover.alt} fill priority sizes="(max-width: 1280px) 100vw, 1240px" className={isFifi ? "object-cover" : "object-contain p-4 md:p-10"} />
+              {isFifi && (
+                <div className="absolute bottom-6 left-1/2 h-[72%] w-[38%] -translate-x-1/2 md:w-[26%]">
+                  <Image src={assetPath("/work/fifi/assistant-character.svg")} alt="Fifi the cat, waving" fill priority sizes="30vw" className="object-contain object-bottom" />
+                </div>
+              )}
+            </div>
+          </div>
         </section>
-        {project.assets.length > 0 && <section className="page-shell grid gap-4 pb-20 md:grid-cols-2 md:pb-28">{project.assets.map((asset, index) => <div key={asset} className={`relative min-h-[520px] overflow-hidden rounded-[24px] ${dark ? "bg-[#0b2545]" : "bg-[#e4efe7]"}`}><Image src={asset} alt={`${project.name} supporting product view ${index + 1}`} fill sizes="(max-width: 768px) 100vw, 50vw" className={dark ? "object-cover" : "object-contain p-8"}/>{dark && <div className="absolute bottom-8 left-1/2 z-10 h-[350px] w-[270px] -translate-x-1/2 md:h-[390px] md:w-[300px]"><Image src={assetPath(index === 0 ? "/work/fifi/detective-character.svg" : "/work/fifi/fae-character.svg")} alt={index === 0 ? "Fifi dressed as a noir detective" : "Fifi dressed as a forest fae"} fill sizes="300px" className="object-contain object-bottom drop-shadow-[0_18px_26px_rgba(0,0,0,.3)]" /></div>}</div>)}</section>}
-      </> : <section className="page-shell py-20 md:py-28"><p className="text-xs font-semibold uppercase tracking-[.16em] text-black/45">Placeholder case study</p><h2 className="mt-5 max-w-[900px] text-[clamp(2.8rem,5vw,5.5rem)] leading-[1] tracking-[-.04em]">The structure is ready. Final visuals and process material will be migrated from the Framer portfolio.</h2></section>}
 
-      <section className="bg-[#181915] px-6 py-20 text-white md:py-24"><div className="mx-auto max-w-[1160px]"><Link href="/#work" className="text-[clamp(3rem,6vw,6rem)] leading-none tracking-[-.04em]">Back to selected work <span className="text-[#ffee98]">↗</span></Link></div></section>
-    </main>
+        <section className="shell grid gap-12 py-20 md:grid-cols-12 md:py-28">
+          <div className="md:col-span-7">
+            <h2 className="display text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-[-0.02em]">The situation</h2>
+            <p className="measure mt-5 text-[1.2rem] leading-relaxed text-[var(--ink-2)]">{project.context}</p>
+          </div>
+          <div className="md:col-span-4 md:col-start-9">
+            <h2 className="display text-[1.4rem] font-bold">What I owned</h2>
+            <ul className="mt-4 border-t rule">
+              {project.scope.map((item) => (
+                <li key={item} className="border-b rule py-2.5">{item}</li>
+              ))}
+            </ul>
+            {project.proof.length > 0 && (
+              <>
+                <h2 className="display mt-10 text-[1.4rem] font-bold">Outcome</h2>
+                <ul className="mt-4 border-t rule">
+                  {project.proof.map((point) => (
+                    <li key={point} className="border-b rule py-2.5">{point}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        </section>
+
+        {project.decisions.length > 0 && (
+          <section className="border-t rule bg-[var(--surface)]">
+            <div className="shell py-20 md:py-28">
+              <h2 className="display text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-[-0.02em]">Decisions that shaped it</h2>
+              <div className="mt-10 grid gap-x-10 gap-y-12 md:grid-cols-2">
+                {project.decisions.map((decision) => (
+                  <article key={decision.title} className="border-t-2 pt-5" style={{ borderColor: theme.bg }}>
+                    <h3 className="display text-[1.55rem] font-bold leading-tight tracking-[-0.015em]">{decision.title}</h3>
+                    <p className="mt-3 text-[1.08rem] leading-relaxed text-[var(--ink-2)]">{decision.body}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section className="shell py-20 md:py-28">
+          <h2 className="display text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-[-0.02em]">Screens</h2>
+          <div className="mt-10 grid gap-x-6 gap-y-12 md:grid-cols-2">
+            {project.gallery.map((shot) => (
+              <figure key={shot.src} className={shot.wide ? "md:col-span-2" : undefined}>
+                <div className="relative overflow-hidden rounded-[14px]" style={{ background: theme.soft }}>
+                  <Image src={shot.src} alt={shot.alt} width={2000} height={1500} sizes={shot.wide ? "(max-width: 1280px) 100vw, 1240px" : "(max-width: 768px) 100vw, 620px"} className="h-auto w-full" />
+                  {shot.overlay && (
+                    <div className="absolute bottom-[6%] left-1/2 h-[68%] w-[46%] -translate-x-1/2">
+                      <Image src={shot.overlay} alt="" fill sizes="300px" className="object-contain object-bottom" />
+                    </div>
+                  )}
+                </div>
+                <figcaption className="mt-3 max-w-[60ch] text-[0.98rem] text-[var(--ink-2)]">{shot.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+
+        {(project.build || project.links) && (
+          <section className="border-t rule bg-[var(--surface)]">
+            <div className="shell grid gap-10 py-20 md:grid-cols-12 md:py-24">
+              {project.build && (
+                <div className="md:col-span-7">
+                  <h2 className="display text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-[-0.02em]">How it&apos;s built</h2>
+                  <p className="measure mt-5 text-[1.15rem] leading-relaxed text-[var(--ink-2)]">{project.build}</p>
+                </div>
+              )}
+              {project.links && (
+                <div className="md:col-span-4 md:col-start-9">
+                  <h2 className="display text-[1.4rem] font-bold">See it live</h2>
+                  <ul className="mt-4 space-y-2">
+                    {project.links.map((item) => (
+                      <li key={item.href}>
+                        <a className="link text-[1.1rem] font-semibold" href={item.href}>{item.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        <Link href={`/work/${next.slug}/`} className="group block" style={{ background: next.theme.bg, color: next.theme.fg }}>
+          <div className="shell py-16 md:py-20">
+            <p className="text-[0.95rem]" style={{ color: next.theme.accent }}>Next project</p>
+            <p className="display mt-2 text-[clamp(2.4rem,6vw,4.8rem)] font-extrabold leading-none tracking-[-0.04em]">
+              <span className="link">{next.name}</span>
+            </p>
+            <p className="mt-4 max-w-[48ch] opacity-85">{next.summary}</p>
+          </div>
+        </Link>
+        <ContactBand />
+      </main>
+      <SiteFooter />
+    </>
   );
 }

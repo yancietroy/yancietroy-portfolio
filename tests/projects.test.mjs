@@ -1,16 +1,21 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
 const source = readFileSync(new URL("../src/content/projects.ts", import.meta.url), "utf8");
 
-test("portfolio contains four unique project slugs", () => {
+test("portfolio contains six unique project slugs", () => {
   const slugs = [...source.matchAll(/slug: "([^"]+)"/g)].map((match) => match[1]);
-  assert.equal(slugs.length, 4);
+  assert.equal(slugs.length, 6);
   assert.equal(new Set(slugs).size, slugs.length);
 });
 
-test("flagship products use local cover assets", () => {
-  assert.match(source, /slug: "grocerybudget"[\s\S]*cover: assetPath\("\/work\/grocerybudget\//);
-  assert.match(source, /slug: "fifi"[\s\S]*cover: assetPath\("\/work\/fifi\//);
+test("every referenced image exists in public/work", () => {
+  const refs = [...source.matchAll(/img\("([^"]+)", "([^"]+)"\)/g)].map(([, slug, file]) => `public/work/${slug}/${file}`);
+  assert.ok(refs.length > 20);
+  for (const ref of refs) assert.ok(existsSync(new URL(`../${ref}`, import.meta.url)), `missing ${ref}`);
+});
+
+test("no stale point-in-time metrics", () => {
+  assert.doesNotMatch(source, /\bMRR\b|\$436|293 paying|monthly active/i);
 });

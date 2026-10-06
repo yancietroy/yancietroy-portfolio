@@ -1,12 +1,85 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { capabilities, experience } from "@/content/resume";
+import { ContactBand } from "@/components/ContactBand";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+import { projectsIn } from "@/content/projects";
+import { education, experience } from "@/content/resume";
+import { site } from "@/content/site";
+
+export const metadata: Metadata = { title: "Résumé, Yancie Troy Saludo" };
 
 export default function ResumePage() {
-  return <main className="page-shell pb-24 pt-8 md:pb-40">
-    <nav className="flex items-center justify-between border-b hairline pb-5 text-sm"><Link href="/">← Portfolio</Link><a href="mailto:yanciesaludo14@gmail.com">Email me ↗</a></nav>
-    <header className="grid gap-10 pb-20 pt-16 md:grid-cols-[1.3fr_.7fr] md:pb-28"><div><p className="text-sm uppercase tracking-[.16em] text-black/45">Yancie Troy Saludo</p><h1 className="mt-6 text-[clamp(3.6rem,6.5vw,6rem)] leading-[.91] tracking-[-.04em]">Product designer<br/><span className="serif">&amp; product builder.</span></h1></div><p className="self-end text-lg leading-relaxed text-black/60">I take B2B SaaS and consumer-mobile products from problem definition through interface systems and production. Based in Rizal, Philippines and working remotely.</p></header>
-    <section className="grid gap-10 border-t hairline py-16 md:grid-cols-[.55fr_1.45fr]"><h2 className="text-sm uppercase tracking-[.16em] text-black/45">Independent products</h2><div className="space-y-12"><article><h3 className="text-4xl tracking-[-.04em]">GroceryBudget</h3><p className="mt-3 text-sm text-black/45">Founder · Product Designer · Builder · 2025—Now</p><p className="mt-5 max-w-[65ch] text-lg leading-relaxed text-black/62">Designed and shipped an offline-first grocery budgeting app for iOS and Android using React Native, Expo, TypeScript, Firebase, and NativeWind. Owns product decisions, UX/UI, implementation, analytics, monetization, releases, and customer feedback.</p></article><article><h3 className="text-4xl tracking-[-.04em]">Fifi</h3><p className="mt-3 text-sm text-black/45">Founder · Product Designer · Builder · 2026—Now</p><p className="mt-5 max-w-[65ch] text-lg leading-relaxed text-black/62">Designed and shipped an iOS wake-up-call alarm using Expo, Swift, AlarmKit, Live Activities, Firebase, RevenueCat, and PostHog. Built the product around offline reliability, character-led interaction, and a personalized morning briefing.</p></article></div></section>
-    <section className="grid gap-10 border-t hairline py-16 md:grid-cols-[.55fr_1.45fr]"><h2 className="text-sm uppercase tracking-[.16em] text-black/45">Experience</h2><div>{experience.map(item => <article key={item.company} className="border-b hairline pb-10 pt-10 first:pt-0"><div className="flex flex-wrap items-baseline justify-between gap-3"><h3 className="text-3xl tracking-[-.04em]">{item.company} · {item.role}</h3><span className="text-sm text-black/45">{item.period}</span></div><p className="mt-5 max-w-[70ch] text-lg leading-relaxed text-black/62">{item.summary}</p></article>)}</div></section>
-    <section className="grid gap-10 border-y hairline py-16 md:grid-cols-[.55fr_1.45fr]"><h2 className="text-sm uppercase tracking-[.16em] text-black/45">Capabilities</h2><div className="flex flex-wrap gap-x-3 gap-y-2">{capabilities.map((capability, index) => <span key={capability} className="text-[clamp(1.8rem,3vw,3.2rem)] tracking-[-.04em]">{capability}{index < capabilities.length - 1 && <span className="ml-3 text-black/20">/</span>}</span>)}</div></section>
-  </main>;
+  return (
+    <>
+      <SiteHeader />
+      <main className="overflow-x-clip">
+        <section className="shell pb-16 pt-14 md:pb-20 md:pt-20">
+          <h1 className="display text-[clamp(2.8rem,7vw,5.6rem)] font-bold leading-[0.95] tracking-[-0.035em]">Résumé</h1>
+          <p className="measure mt-6 text-[1.2rem] leading-relaxed text-[var(--ink-2)]">
+            Two versions of the same story. One leads with design, the other with design and build. Both are one page and
+            readable by applicant tracking systems.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            {site.resumes.map((resume, index) => (
+              <a key={resume.href} href={resume.href} className={`button ${index === 0 ? "button-solid" : "button-line"}`}>
+                Download the {resume.label}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="border-t rule bg-[var(--surface)]">
+          <div className="shell grid gap-10 py-16 md:grid-cols-12 md:py-20">
+            <h2 className="display text-[1.8rem] font-bold md:col-span-3">Experience</h2>
+            <div className="md:col-span-9">
+              {experience.map((job) => (
+                <article key={job.company} className="border-b rule pb-10 pt-0 [&+&]:pt-10">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                    <h3 className="display text-[1.7rem] font-bold tracking-[-0.02em]">
+                      {job.role}, {job.company}
+                    </h3>
+                    <p className="text-[var(--ink-3)]">{job.period}</p>
+                  </div>
+                  <p className="text-[var(--ink-3)]">{job.where}</p>
+                  <ul className="mt-4 list-disc space-y-2 pl-5 text-[var(--ink-2)]">
+                    {job.points.map((point) => <li key={point}>{point}</li>)}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="shell grid gap-10 py-16 md:grid-cols-12 md:py-20">
+          <h2 className="display text-[1.8rem] font-bold md:col-span-3">Products</h2>
+          <div className="md:col-span-9">
+            {projectsIn("product").map((project) => (
+              <article key={project.slug} className="border-b rule pb-10 [&+&]:pt-10">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                  <h3 className="display text-[1.7rem] font-bold tracking-[-0.02em]">
+                    <Link className="link" href={`/work/${project.slug}/`}>{project.name}</Link>
+                  </h3>
+                  <p className="text-[var(--ink-3)]">{project.period}</p>
+                </div>
+                <p className="text-[var(--ink-3)]">{project.role}</p>
+                <ul className="mt-4 list-disc space-y-2 pl-5 text-[var(--ink-2)]">
+                  {project.proof.map((point) => <li key={point}>{point}</li>)}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="shell grid gap-4 border-t rule py-12 md:grid-cols-12">
+          <h2 className="display text-[1.8rem] font-bold md:col-span-3">Education</h2>
+          <p className="text-[1.1rem] md:col-span-9">
+            {education.degree}, {education.school}, {education.year}
+          </p>
+        </section>
+        <ContactBand />
+      </main>
+      <SiteFooter />
+    </>
+  );
 }
