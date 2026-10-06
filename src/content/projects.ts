@@ -24,7 +24,7 @@ export const projects: readonly PortfolioProject[] = [
     role: "Founder · Product design · Product build",
     period: "2025—Now",
     summary: "An offline-first grocery budgeting app that turns a shopping list into a live picture of what you are spending.",
-    proof: "Shipped on iOS and Android · 293 paying subscribers · $436 MRR",
+    proof: "iOS and Android · 30,000+ users · 20x revenue growth in six months",
     tone: "grocery",
     cover: assetPath("/work/grocerybudget/hero-v2.png"),
     assets: [assetPath("/work/grocerybudget/inside-cart.png"), assetPath("/work/grocerybudget/insights.png")],

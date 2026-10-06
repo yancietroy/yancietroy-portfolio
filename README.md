@@ -22,6 +22,6 @@ The production build is a static export in `out/`, suitable for Cloudflare Pages
 ## Content still needed
 
 - Replace Velaro and GrowthBox placeholder artwork with exports from the existing Framer portfolio.
-- Confirm current GroceryBudget subscriber and MRR figures before publishing.
-- Add final Product Designer and Product Designer & Product Builder resume PDFs.
+- Keep metrics durable (cumulative totals, fixed past windows); see `resume/README.md`.
+- Link the résumé PDFs in `public/resume/` from the résumé page.
 - Confirm the production domain and update `src/app/sitemap.ts` and `public/robots.txt` if it is not `yancietroy.com`.
