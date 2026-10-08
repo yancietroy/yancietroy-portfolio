@@ -32,6 +32,8 @@ export interface Decision {
 
 export interface PortfolioProject {
   slug: string;
+  /** One short approved stat for the home page card */
+  highlight?: string;
   name: string;
   group: ProjectGroup;
   /** One sentence: what it is, in plain words */
@@ -60,6 +62,7 @@ const img = (slug: string, file: string) => assetPath(`/work/${slug}/${file}`);
 export const projects: readonly PortfolioProject[] = [
   {
     slug: "grocerybudget",
+    highlight: "30,000+ users",
     name: "GroceryBudget",
     group: "product",
     summary: "A grocery budgeting app that shows what a trip costs while you're still in the aisle.",
@@ -109,6 +112,7 @@ export const projects: readonly PortfolioProject[] = [
   },
   {
     slug: "fifi",
+    highlight: "Live on the App Store",
     name: "Fifi",
     group: "product",
     summary: "An iPhone alarm that rings like a call. Pick up, and a character reads you your morning.",
@@ -150,6 +154,7 @@ export const projects: readonly PortfolioProject[] = [
   },
   {
     slug: "velaro",
+    highlight: "Design system adopted platform-wide",
     name: "Velaro",
     group: "work",
     summary: "Inbox, AI chatbots, workflow automation and reporting for a customer-engagement platform.",
@@ -193,6 +198,7 @@ export const projects: readonly PortfolioProject[] = [
   },
   {
     slug: "allie",
+    highlight: "Research to Figma specs",
     name: "Allie",
     group: "work",
     summary: "Performance dashboards and team tools for allied-health clinic owners.",

@@ -3,22 +3,24 @@
 @tailwind utilities;
 
 /*
-  Shell: cool, quiet slate on near-white so each product's own colors carry the page.
-  Boldness lives in the product bands; everything else stays disciplined.
+  Shell: near-black, one column, thin-bordered cards. The products' own colors are the
+  only saturated thing on the page, so they carry it. Small mono labels do the wayfinding.
 */
 :root {
-  --paper: #f4f5f7;
-  --surface: #ffffff;
-  --ink: #1a1d23;
-  --ink-2: #4a505b;
-  --ink-3: #6b717d;
-  --line: #dde0e5;
-  --focus: #1366e8;
+  --paper: #0e0f11;
+  --surface: #16181b;
+  --surface-2: #1d2024;
+  --ink: #ecedef;
+  --ink-2: #b4b8bf;
+  --ink-3: #8b9099;
+  --line: #2a2d33;
+  --focus: #7fb0ff;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
-html { background: var(--paper); scroll-behavior: smooth; }
+html { background: var(--paper); scroll-behavior: smooth; scroll-padding-top: 24px; }
 body {
   margin: 0;
   color: var(--ink);
@@ -32,12 +34,49 @@ body {
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 4px; }
-::selection { background: #1a1d23; color: #fff; }
+::selection { background: var(--ink); color: var(--paper); }
 
 .display { font-family: var(--font-display), system-ui, sans-serif; font-optical-sizing: auto; }
-.shell { width: min(calc(100% - 32px), 1240px); margin-inline: auto; }
+.mono { font-family: var(--font-mono), ui-monospace, monospace; }
+.shell { width: min(calc(100% - 32px), 1040px); margin-inline: auto; }
 .measure { max-width: 62ch; }
 .rule { border-color: var(--line); }
+
+/* Small spaced uppercase labels: section titles, card metadata, nav */
+.label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.section-title {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+
+/* A soft light in the card's own color that follows the mouse (Spotlight sets --mx/--my). */
+.spotlight { position: relative; isolation: isolate; }
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--spot) 14%, transparent), transparent 65%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .spotlight:hover::before { opacity: 1; }
+  .spotlight:hover { border-color: color-mix(in srgb, var(--spot) 45%, var(--line)); }
+}
 
 /* Links that read as links: underline that tightens on hover */
 .link {
@@ -54,19 +93,19 @@ img { max-width: 100%; }
   align-items: center;
   gap: 0.5rem;
   min-height: 44px;
-  padding: 0.65rem 1.1rem;
+  padding: 0.6rem 1.05rem;
   border-radius: 10px;
   font-weight: 600;
   font-size: 0.95rem;
   transition: transform 160ms var(--ease-out), background-color 160ms ease, border-color 160ms ease;
 }
 .button:active { transform: scale(0.97); }
-.button-solid { background: var(--ink); color: #fff; }
-.button-solid:hover { background: #2c313a; }
-.button-line { border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); }
-.button-line:hover { border-color: var(--ink); }
+.button-solid { background: var(--ink); color: var(--paper); }
+.button-solid:hover { background: #ffffff; }
+.button-line { border: 1px solid var(--line); color: var(--ink); }
+.button-line:hover { border-color: var(--ink-3); }
 
-/* The single orchestrated moment: the hero headline settles in once on load. */
+/* Load moment: the hero settles in, then the build line fills segment by segment. */
 @keyframes settle {
   from { opacity: 0; transform: translateY(0.35em); }
   to { opacity: 1; transform: none; }
@@ -74,6 +113,20 @@ img { max-width: 100%; }
 .settle { animation: settle 900ms var(--ease-out) both; }
 .settle-2 { animation-delay: 90ms; }
 .settle-3 { animation-delay: 180ms; }
+.settle-4 { animation-delay: 270ms; }
+
+@keyframes segment-on {
+  from { background-color: var(--line); }
+  to { background-color: var(--seg, var(--ink-3)); }
+}
+.build-line { display: grid; grid-template-columns: repeat(var(--count), 1fr); gap: 6px; }
+.build-line > span {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--line);
+  animation: segment-on 420ms ease forwards;
+  animation-delay: calc(500ms + var(--i) * 45ms);
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
