@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Instrument_Sans, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", weight: ["500", "600", "700", "800"] });
-const body = Instrument_Sans({ subsets: ["latin"], variable: "--font-body" });
-const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", weight: ["400", "500"] });
+// Self-hosted so builds never depend on Google Fonts. Latin variable-weight files from
+// Fontsource (@fontsource-variable/*), SIL OFL 1.1; licences sit beside them in ./fonts.
+const display = localFont({ src: "./fonts/BricolageGrotesque-latin.woff2", weight: "200 800", variable: "--font-display", display: "swap" });
+const body = localFont({ src: "./fonts/InstrumentSans-latin.woff2", weight: "400 700", variable: "--font-body", display: "swap" });
+const mono = localFont({ src: "./fonts/JetBrainsMono-latin.woff2", weight: "100 800", variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Yancie Troy Saludo, product designer",
