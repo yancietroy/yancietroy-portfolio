@@ -6,7 +6,7 @@ import { assetPath } from "@/lib/assetPath";
 export type ProjectGroup = "product" | "work" | "more";
 
 export interface Theme {
-  /** Band background */
+  /** Band background. Keep it deep: the site is dark and bright bands glare. */
   bg: string;
   /** Text on the band */
   fg: string;
@@ -161,7 +161,7 @@ export const projects: readonly PortfolioProject[] = [
     role: "Product Designer",
     period: "Nov 2023 to May 2026",
     platform: "Web, B2B SaaS",
-    theme: { bg: "#1366e8", fg: "#f3f8ff", accent: "#bcd6ff", soft: "#e6effd" },
+    theme: { bg: "#0f2554", fg: "#f3f8ff", accent: "#bcd6ff", soft: "#e6effd" },
     cover: { src: img("velaro", "cover.webp"), alt: "Velaro's chatbot settings, reports, workflow builder and inbox", caption: "Chatbot settings, reporting, the workflow builder and the agent inbox." },
     proof: [
       "Owned design from Figma spec to release for the inbox, chat widget and admin",
@@ -205,7 +205,7 @@ export const projects: readonly PortfolioProject[] = [
     role: "Product Designer at GrowthBox",
     period: "Jun to Nov 2023",
     platform: "Web and mobile web",
-    theme: { bg: "#4b3fc4", fg: "#f6f4ff", accent: "#c9c3ff", soft: "#eeecfb" },
+    theme: { bg: "#241d5e", fg: "#f6f4ff", accent: "#c9c3ff", soft: "#eeecfb" },
     cover: { src: img("allie", "cover.webp"), alt: "Allie's clinic dashboard on a laptop and a phone", caption: "The clinic dashboard on desktop and mobile." },
     proof: [
       "Designed core workflows for clinic managers, from research to Figma specs",
@@ -230,7 +230,7 @@ export const projects: readonly PortfolioProject[] = [
       },
     ],
     gallery: [
-      { src: img("allie", "clinic-dashboard.webp"), alt: "Clinic selector and revenue dashboard", caption: "Choosing a clinic, then the revenue dashboard against target." },
+      { src: img("allie", "clinic-dashboard.webp"), alt: "Clinic selector and revenue dashboard", caption: "Choosing a clinic, then the revenue dashboard against target.", wide: true },
       { src: img("allie", "practitioner-views.webp"), alt: "Practitioner actions, dashboard, data table and timesheet", caption: "One practitioner's actions, dashboard, data and timesheet.", wide: true },
       { src: img("allie", "actions-and-notes.webp"), alt: "Mentoring notes beside a practitioner's action list", caption: "Mentoring notes become actions, and completing one closes the loop." },
       { src: img("allie", "mobile-and-targets.webp"), alt: "Mobile dashboard, data table and weekly targets", caption: "Mobile dashboard, the data view and weekly targets." },
@@ -244,7 +244,7 @@ export const projects: readonly PortfolioProject[] = [
     summary: "Marketing sites for Allie and for UWAI, an Australian membership app for gift-card savings.",
     role: "UX/UI Designer",
     platform: "Web",
-    theme: { bg: "#e8582f", fg: "#fff6f1", accent: "#ffd2bf", soft: "#fdebe3" },
+    theme: { bg: "#4a1f12", fg: "#fff6f1", accent: "#ffd2bf", soft: "#fdebe3" },
     cover: { src: img("marketing-sites", "allie-landing.webp"), alt: "Allie's marketing home page", caption: "Allie's home page." },
     proof: ["Two sites, two very different audiences", "Landing, feature, pricing and about pages"],
     context:

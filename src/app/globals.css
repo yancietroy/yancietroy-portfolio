@@ -78,6 +78,21 @@ img { max-width: 100%; }
   .spotlight:hover { border-color: color-mix(in srgb, var(--spot) 45%, var(--line)); }
 }
 
+/* Full-screen image viewer for case study screens */
+.lightbox {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+}
+.lightbox::backdrop { background: rgb(8 9 10 / 0.92); backdrop-filter: blur(4px); }
+.lightbox[open] { animation: settle 280ms var(--ease-out); }
+
 /* Links that read as links: underline that tightens on hover */
 .link {
   text-decoration: underline;

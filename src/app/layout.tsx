@@ -16,7 +16,8 @@ export const viewport: Viewport = { themeColor: "#0e0f11" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    // Extensions (dark-mode ones especially) edit <html> attributes before hydration; this only silences that one tag.
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`} suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );

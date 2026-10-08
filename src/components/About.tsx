@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { projectsIn } from "@/content/projects";
+import { assetPath } from "@/lib/assetPath";
 import { experience } from "@/content/resume";
 import { site } from "@/content/site";
 
@@ -25,8 +27,8 @@ export function About() {
       <h2 id="about-title" className="section-title">About</h2>
       <div className="card mt-8 grid overflow-hidden md:grid-cols-[15rem_1fr]">
         <div className="flex flex-col justify-between gap-6 border-b rule bg-[var(--surface-2)] p-6 md:border-b-0 md:border-r">
-          <div aria-hidden="true" className="display grid aspect-square w-24 place-items-center rounded-[12px] border rule text-[2.2rem] font-bold tracking-[-0.04em] md:w-full">
-            YT
+          <div className="relative aspect-square w-32 overflow-hidden rounded-[12px] border rule md:w-full">
+            <Image src={assetPath("/work/about/portrait.webp")} alt="Yancie Troy Saludo" fill sizes="(max-width: 768px) 128px, 240px" className="object-cover object-[62%_35%]" />
           </div>
           <div className="label space-y-1.5 text-[var(--ink-3)]">
             <p>{site.location}</p>

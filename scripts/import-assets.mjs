@@ -46,6 +46,9 @@ const map = {
     "digital-contributions/05": "soundcore",
     "digital-contributions/06": "seatmi",
   },
+  about: {
+    "about/02": "portrait",
+  },
 };
 
 for (const [slug, files] of Object.entries(map)) {
