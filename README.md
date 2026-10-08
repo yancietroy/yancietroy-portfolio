@@ -19,6 +19,10 @@ npm run build
 
 The production build is a static export in `out/`. Pushing to `main` deploys it to https://yancietroy.github.io via `.github/workflows/deploy-pages.yml`.
 
+## Refreshing "A year in blocks"
+
+The commit graph is a snapshot of the private app repos (`../grocerybudget`, `../ringrise` and their marketing sites), not live data. To update it, run `node scripts/contributions.mjs` and commit `src/content/contributions.json`. It stores only an activity level per day, never commit counts.
+
 ## Content still needed
 
 - Velaro, Allie, marketing-site and earlier-work images come from `../framer-backup` via `scripts/import-assets.mjs`.

@@ -19,3 +19,13 @@ test("every referenced image exists in public/work", () => {
 test("no stale point-in-time metrics", () => {
   assert.doesNotMatch(source, /\bMRR\b|\$436|293 paying|monthly active/i);
 });
+
+test("commit graph snapshot holds activity levels, not commit counts", () => {
+  const { start, end, days } = JSON.parse(readFileSync(new URL("../src/content/contributions.json", import.meta.url), "utf8"));
+  assert.ok(start < end);
+  for (const [day, [product, level]] of Object.entries(days)) {
+    assert.ok(day >= start && day <= end, `${day} outside ${start}..${end}`);
+    assert.ok(["grocerybudget", "fifi"].includes(product), `unknown product ${product}`);
+    assert.ok(Number.isInteger(level) && level >= 1 && level <= 4, `${day} has level ${level}`);
+  }
+});
