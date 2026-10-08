@@ -21,8 +21,10 @@ export interface Shot {
   alt: string;
   caption: string;
   wide?: boolean;
-  /** Transparent character art layered over the scene */
-  overlay?: string;
+  /** A single phone screen: shown three to a row instead of two */
+  phone?: boolean;
+  /** Full-bleed artwork that should fill its frame (cropped) rather than sit inside it */
+  bleed?: boolean;
 }
 
 export interface Decision {
@@ -44,6 +46,8 @@ export interface PortfolioProject {
   builtWith?: string;
   theme: Theme;
   cover: Shot;
+  /** Home card slides after the cover. Defaults to the first regular-width gallery shots. */
+  preview?: readonly Shot[];
   /** Approved, durable proof points */
   proof: readonly string[];
   /** The situation, in two to four sentences */
@@ -121,7 +125,12 @@ export const projects: readonly PortfolioProject[] = [
     platform: "iOS",
     builtWith: "Expo, Swift, Firebase, Gemini",
     theme: { bg: "#06182e", fg: "#fff9d9", accent: "#ffee98", soft: "#0b2545" },
-    cover: { src: img("fifi", "assistant.webp"), alt: "Fifi's room at sunrise", caption: "Fifi's room. Every caller has their own scene." },
+    cover: { src: img("fifi", "cover.webp"), alt: "Fifi waving beside the line “The alarm with something to say”", caption: "The alarm with something to say.", bleed: true },
+    preview: [
+      { src: img("fifi", "cast.webp"), alt: "Five of Fifi's ten characters on a windowsill", caption: "Ten voices. Pick who wakes you.", bleed: true },
+      { src: img("fifi", "what-arrives.webp"), alt: "A call screen with weather, a reminder and headlines around it", caption: "Weather, headlines and the note you left yourself.", bleed: true },
+      { src: img("fifi", "different-ways.webp"), alt: "Fifi Noir in a trench coat on the phone", caption: "Different ways to wake you up.", bleed: true },
+    ],
     proof: [
       "Live on the App Store",
       "Ten characters, each with their own voice and script",
@@ -145,8 +154,15 @@ export const projects: readonly PortfolioProject[] = [
       },
     ],
     gallery: [
-      { src: img("fifi", "detective.webp"), alt: "Fifi Noir's detective office scene", caption: "Fifi Noir gets a detective's office.", overlay: img("fifi", "detective-character.svg") },
-      { src: img("fifi", "fae.webp"), alt: "Fifi Fae's forest scene", caption: "Fifi Fae, one of the ten callers.", overlay: img("fifi", "fae-character.svg") },
+      { src: img("fifi", "store-screenshots.webp"), alt: "Six App Store screenshots for Fifi", caption: "The App Store screenshot set.", wide: true },
+      { src: img("fifi", "call-morning.webp"), alt: "Fifi on the call screen saying “Good morning, Troy. It's Tuesday!”", caption: "Pick up, and the briefing starts with your name.", phone: true },
+      { src: img("fifi", "call-sergeant.webp"), alt: "A drill-sergeant caller in a home gym saying “Rain until noon. Take an umbrella.”", caption: "Another caller, another room. Same briefing, in character.", phone: true },
+      { src: img("fifi", "streak.webp"), alt: "The Your mornings screen showing a one-day streak", caption: "Every morning you pick up counts toward a streak.", phone: true },
+      { src: img("fifi", "what-arrives.webp"), alt: "A call screen with weather, a reminder and headlines around it", caption: "What arrives: a hello, your forecast and headlines, then your own voice note." },
+      { src: img("fifi", "how-it-works.webp"), alt: "Four steps beside the Edit alarm screen", caption: "Set the time, pick a sound, choose who calls, edit the briefing." },
+      { src: img("fifi", "cast.webp"), alt: "Five of Fifi's ten characters on a windowsill", caption: "Ten callers, each with their own voice and script.", wide: true, bleed: true },
+      { src: img("fifi", "note.webp"), alt: "The Record a voice screen with a cat holding a recorder", caption: "Record a voice note for yourself, and it plays in the call." },
+      { src: img("fifi", "different-ways.webp"), alt: "Fifi Noir in a trench coat on the phone", caption: "A warm hello, a whisper or a drill sergeant." },
     ],
     build:
       "An Expo app with Swift for AlarmKit, Live Activities and the Dynamic Island. Briefings come from Firebase Cloud Functions: Gemini writes each character's script and ElevenLabs or Cartesia voices it. There are no accounts, so App Check with App Attest keeps strangers off the API. RevenueCat runs the subscription and PostHog the analytics.",

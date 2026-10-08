@@ -1,13 +1,12 @@
 import Link from "next/link";
 import type { PortfolioProject } from "@/content/projects";
-import { assetPath } from "@/lib/assetPath";
 import { ProjectPreview, type Slide } from "./ProjectPreview";
 import { Spotlight } from "./Spotlight";
 
-/** The cover, then up to three of the project's regular-width screens. */
+/** The cover, then the project's chosen preview shots or its first three regular-width screens. */
 const slidesFor = (project: PortfolioProject): Slide[] => [
-  { ...project.cover, overlay: project.slug === "fifi" ? assetPath("/work/fifi/assistant-character.svg") : project.cover.overlay },
-  ...project.gallery.filter((shot) => !shot.wide).slice(0, 3),
+  project.cover,
+  ...(project.preview ?? project.gallery.filter((shot) => !shot.wide && !shot.phone).slice(0, 3)),
 ];
 
 /** Home page card: screens framed in the product's own color, one stat, two ways in. */
@@ -21,7 +20,6 @@ export function ProjectCard({ project }: { project: PortfolioProject }) {
       <Link href={`/work/${project.slug}/`} aria-label={`${project.name} case study`} className="block">
         <ProjectPreview
           slides={slidesFor(project)}
-          fit={project.slug === "fifi" ? "cover" : "contain"}
           background={isProduct ? theme.bg : theme.soft}
           tone={isProduct ? theme.fg : theme.bg}
         />

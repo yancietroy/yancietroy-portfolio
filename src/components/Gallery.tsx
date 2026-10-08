@@ -5,6 +5,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Shot } from "@/content/projects";
 
 /** Case study screens. Click one to open it large; arrows step through, Esc or the backdrop closes. */
+const span = (shot: Shot) => (shot.wide ? "col-span-2 md:col-span-6" : shot.phone ? "col-span-1 md:col-span-2" : "col-span-2 md:col-span-3");
+
 export function Gallery({ shots, frame }: { shots: readonly Shot[]; frame: string }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState<number | null>(null);
@@ -29,14 +31,14 @@ export function Gallery({ shots, frame }: { shots: readonly Shot[]; frame: strin
 
   return (
     <>
-      <div className="mt-8 grid gap-x-5 gap-y-10 md:grid-cols-2">
+      <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-6 md:gap-x-5">
         {shots.map((shot, index) => (
-          <figure key={shot.src} className={shot.wide ? "md:col-span-2" : undefined}>
+          <figure key={shot.src} className={span(shot)}>
             <button
               type="button"
               onClick={() => show(index)}
               aria-label={`Enlarge: ${shot.alt}`}
-              className="group relative block w-full cursor-zoom-in overflow-hidden rounded-[12px] border rule"
+              className={`group relative block w-full cursor-zoom-in overflow-hidden rounded-[12px] border rule ${shot.phone ? "p-3 md:p-5" : ""}`}
               style={{ background: frame }}
             >
               <Image
@@ -44,14 +46,10 @@ export function Gallery({ shots, frame }: { shots: readonly Shot[]; frame: strin
                 alt={shot.alt}
                 width={2000}
                 height={1500}
-                sizes={shot.wide ? "(max-width: 1040px) 100vw, 1040px" : "(max-width: 768px) 100vw, 520px"}
-                className="h-auto w-full transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.015]"
+                sizes={shot.wide ? "(max-width: 1040px) 100vw, 1040px" : shot.phone ? "(max-width: 768px) 50vw, 340px" : "(max-width: 768px) 100vw, 520px"}
+                // Phones share one screen shape so a row of them lines up top and bottom.
+                className={`w-full transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.015] ${shot.phone ? "aspect-[0.465] rounded-[20px] object-cover object-top" : "h-auto"}`}
               />
-              {shot.overlay && (
-                <div className="absolute bottom-[6%] left-1/2 h-[68%] w-[46%] -translate-x-1/2">
-                  <Image src={shot.overlay} alt="" fill sizes="300px" className="object-contain object-bottom" />
-                </div>
-              )}
             </button>
             <figcaption className="mt-3 max-w-[60ch] text-[0.95rem] text-[var(--ink-2)]">{shot.caption}</figcaption>
           </figure>
@@ -67,14 +65,8 @@ export function Gallery({ shots, frame }: { shots: readonly Shot[]; frame: strin
       >
         {current && (
           <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-4 md:p-8" onClick={(event) => event.target === event.currentTarget && dialog.current?.close()}>
-            {/* The frame shrinks to the image so overlays line up with the scene, not the empty space beside it. */}
             <div className="relative w-fit max-w-full overflow-hidden rounded-[12px]" style={{ background: frame }}>
               <Image src={current.src} alt={current.alt} width={2000} height={1500} sizes="100vw" loading="eager" className="block h-auto max-h-[82vh] w-auto max-w-[min(100%,1400px)]" />
-              {current.overlay && (
-                <div className="absolute bottom-[6%] left-1/2 h-[68%] w-[46%] -translate-x-1/2">
-                  <Image src={current.overlay} alt="" fill sizes="600px" className="object-contain object-bottom" />
-                </div>
-              )}
             </div>
             <div className="flex w-full max-w-[1400px] flex-wrap items-center justify-between gap-3">
               <p className="max-w-[70ch] text-[0.95rem] text-[var(--ink-2)]">{current.caption}</p>

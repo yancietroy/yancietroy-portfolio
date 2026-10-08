@@ -6,13 +6,14 @@ import { useEffect, useRef, useState } from "react";
 export interface Slide {
   src: string;
   alt: string;
-  overlay?: string;
+  /** Fill the frame (cropping) instead of fitting inside it */
+  bleed?: boolean;
 }
 
 const interval = 3200;
 
 /** Crossfades through a project's screens while the card is on screen. Stops for reduced motion. */
-export function ProjectPreview({ slides, fit, background, tone }: { slides: readonly Slide[]; fit: "cover" | "contain"; background: string; tone: string }) {
+export function ProjectPreview({ slides, background, tone }: { slides: readonly Slide[]; background: string; tone: string }) {
   const frame = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -52,13 +53,8 @@ export function ProjectPreview({ slides, fit, background, tone }: { slides: read
             alt={slide.alt}
             fill
             sizes="(max-width: 768px) 100vw, 510px"
-            className={fit === "cover" ? "object-cover" : "object-contain p-3 md:p-4"}
+            className={slide.bleed ? "object-cover" : "object-contain p-3 md:p-4"}
           />
-          {slide.overlay && (
-            <div className="absolute bottom-2 left-1/2 h-[72%] w-[34%] -translate-x-1/2">
-              <Image src={slide.overlay} alt="" fill sizes="180px" className="object-contain object-bottom" />
-            </div>
-          )}
         </div>
       ))}
 

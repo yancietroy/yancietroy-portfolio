@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { projects, type PortfolioProject } from "@/content/projects";
-import { assetPath } from "@/lib/assetPath";
 import { ContactBand } from "./ContactBand";
 import { Gallery } from "./Gallery";
 import { SiteFooter } from "./SiteFooter";
@@ -9,7 +8,7 @@ import { SiteHeader } from "./SiteHeader";
 
 export function CaseStudy({ project }: { project: PortfolioProject }) {
   const { theme } = project;
-  const isFifi = project.slug === "fifi";
+  const bleed = project.cover.bleed;
   const next = projects[(projects.findIndex((p) => p.slug === project.slug) + 1) % projects.length];
   const divider = `color-mix(in srgb, ${theme.fg} 22%, transparent)`;
   const facts = [
@@ -42,13 +41,8 @@ export function CaseStudy({ project }: { project: PortfolioProject }) {
               ))}
             </dl>
 
-            <div className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[14px] md:aspect-[16/9]" style={{ background: isFifi ? theme.soft : `color-mix(in srgb, ${theme.fg} 7%, transparent)` }}>
-              <Image src={project.cover.src} alt={project.cover.alt} fill priority sizes="(max-width: 1040px) 100vw, 1040px" className={isFifi ? "object-cover" : "object-contain p-4 md:p-10"} />
-              {isFifi && (
-                <div className="absolute bottom-6 left-1/2 h-[72%] w-[38%] -translate-x-1/2 md:w-[26%]">
-                  <Image src={assetPath("/work/fifi/assistant-character.svg")} alt="Fifi the cat, waving" fill priority sizes="30vw" className="object-contain object-bottom" />
-                </div>
-              )}
+            <div className={`relative mt-10 overflow-hidden rounded-[14px] ${bleed ? "aspect-[3/2]" : "aspect-[4/3] md:aspect-[16/9]"}`} style={{ background: bleed ? theme.soft : `color-mix(in srgb, ${theme.fg} 7%, transparent)` }}>
+              <Image src={project.cover.src} alt={project.cover.alt} fill priority sizes="(max-width: 1040px) 100vw, 1040px" className={bleed ? "object-cover" : "object-contain p-4 md:p-10"} />
             </div>
           </div>
         </section>
