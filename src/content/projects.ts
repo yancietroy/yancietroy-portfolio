@@ -293,7 +293,7 @@ export const projects: readonly PortfolioProject[] = [
     theme: { bg: "#2b2f36", fg: "#f4f5f7", accent: "#aab3c2", soft: "#eceef1" },
     cover: { src: img("earlier-work", "nifty.webp"), alt: "Nifty e-commerce site concept", caption: "Nifty, an e-commerce concept." },
     proof: ["GoCommerce internship", "Coursera UI/UX certification"],
-    context: "Work from my GoCommerce internship and UI/UX coursework, kept here for the record.",
+    context: "Work from my GoCommerce internship and UI/UX coursework.",
     scope: ["E-commerce", "Mobile app concepts", "Visual design"],
     decisions: [],
     gallery: [

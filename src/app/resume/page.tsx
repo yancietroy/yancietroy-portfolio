@@ -16,10 +16,6 @@ export default function ResumePage() {
       <main className="overflow-x-clip">
         <section className="shell pb-16 pt-14 md:pb-20 md:pt-20">
           <h1 className="display text-[clamp(2.8rem,7vw,5.6rem)] font-bold leading-[0.95] tracking-[-0.035em]">Résumé</h1>
-          <p className="measure mt-6 text-[1.2rem] leading-relaxed text-[var(--ink-2)]">
-            Two versions of the same story. One leads with design, the other with design and build. Both are one page and
-            readable by applicant tracking systems.
-          </p>
           <div className="mt-8 flex flex-wrap gap-3">
             {site.resumes.map((resume, index) => (
               <a key={resume.href} href={resume.href} className={`button ${index === 0 ? "button-solid" : "button-line"}`}>
